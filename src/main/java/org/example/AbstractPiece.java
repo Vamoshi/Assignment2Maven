@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,13 +19,13 @@ public abstract class AbstractPiece {
 
     protected abstract List<BoardSquare> getEmptyBoardMoves(AbstractPiece piece);
     //checks if the path to the boardSquare is empty
-    public abstract boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces, AbstractPiece piece);
+    public abstract boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces, AbstractPiece piece);
 
 //  DEFAULT IS "THIS"
     protected List<BoardSquare> getEmptyBoardMoves() {
         return getEmptyBoardMoves(this);
     }
-    public boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces) {
+    public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces) {
         return hasClearPath(destination, allPieces, this);
     }
     public BoardSquare getLocation() {

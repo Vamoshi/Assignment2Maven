@@ -53,9 +53,10 @@ public class Knight extends AbstractPiece {
     }
 
     @Override
-    public boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces, AbstractPiece piece) {
-        for (BoardSquare square:allPieces.keySet()) {
-            if (BoardUtil.isSameSquare(destination, square)) return false;
+    public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces, AbstractPiece piece) {
+        for (AbstractPiece otherPiece : allPieces) {
+            BoardSquare otherLoc = otherPiece.getLocation();
+            if (BoardUtil.isSameSquare(destination, otherLoc)) return false;
         }
         return true;
     }

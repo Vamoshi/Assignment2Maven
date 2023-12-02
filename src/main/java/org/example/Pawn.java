@@ -26,10 +26,11 @@ public class Pawn extends AbstractPiece {
     }
     //Check if anything is in path, if anything in path, return true
     @Override
-    public boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces, AbstractPiece piece) {
+    public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces, AbstractPiece piece) {
         //if first move, then nothing will be in front of pawn. always gonna be true.
         if (piece.isFirstMove()) return true;
-        for (BoardSquare otherLoc : allPieces.keySet()) {
+        for (AbstractPiece otherPiece : allPieces) {
+            BoardSquare otherLoc = otherPiece.getLocation();
             if (BoardUtil.isSameSquare(destination, otherLoc)) {
                 return false;
             }

@@ -8,6 +8,7 @@ public class Bishop extends AbstractPiece {
     public Bishop(Team team, BoardSquare location) {
         super(team, location);
     }
+
     public Bishop() {
         super();
     }
@@ -43,11 +44,12 @@ public class Bishop extends AbstractPiece {
         return getEmptyBoardMoves(this);
     }
 
-    public boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces, AbstractPiece piece) {
+    public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces, AbstractPiece piece) {
         int destX = destination.getX();
         int destY = destination.getY();
 
-        for (BoardSquare otherLoc : allPieces.keySet()) {
+        for (AbstractPiece otherPiece : allPieces) {
+            BoardSquare otherLoc = otherPiece.getLocation();
             int otherX = otherLoc.getX();
             int otherY = otherLoc.getY();
 //          left to right is x+y = x+y
@@ -76,7 +78,7 @@ public class Bishop extends AbstractPiece {
     }
 
     @Override
-    public boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces) {
+    public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces) {
         return hasClearPath(destination, allPieces, this);
     }
 }

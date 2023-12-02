@@ -31,11 +31,20 @@ public class Rook extends AbstractPiece {
         }
         return emptyBoardMoves;
     }
-    public boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces, AbstractPiece piece) {
+
+    public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces, AbstractPiece piece) {
         int x = piece.getLocation().getX();
         int y = piece.getLocation().getY();
 
-        for (BoardSquare otherLoc : allPieces.keySet()) {
+        allPieces.forEach((p) -> System.out.print(p.getClass()));
+
+System.out.print(allPieces.size());
+
+        for (AbstractPiece otherPiece : allPieces) {
+            BoardSquare otherLoc = otherPiece.getLocation();
+
+            System.out.printf("X,Y (%d, %d) OTHERLOC(%d,%d)", x, y, otherLoc.getX(), otherLoc.getY());
+
 //          Check Vertical
             if (destination.getX() == otherLoc.getX()) {
 //              if y > otherLoc.y and otherloc.y > dest.y that means otherloc is in the middle
@@ -57,9 +66,10 @@ public class Rook extends AbstractPiece {
     }
 
     @Override
-    public boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces) {
+    public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces) {
         return hasClearPath(destination, allPieces, this);
     }
+
     @Override
     protected List<BoardSquare> getEmptyBoardMoves() {
         return getEmptyBoardMoves(this);

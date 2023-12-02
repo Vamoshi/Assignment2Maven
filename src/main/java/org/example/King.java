@@ -32,8 +32,9 @@ public class King extends AbstractPiece {
     }
 
     @Override
-    public boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces, AbstractPiece piece) {
-        for (BoardSquare otherLoc : allPieces.keySet()) {
+    public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces, AbstractPiece piece) {
+        for (AbstractPiece otherPiece : allPieces) {
+            BoardSquare otherLoc = otherPiece.getLocation();
             if (BoardUtil.isSameSquare(destination, otherLoc)) return false;
         }
         return true;

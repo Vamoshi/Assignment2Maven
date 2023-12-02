@@ -24,7 +24,7 @@ public class Queen extends AbstractPiece {
 
 //  If any of them return a false, or path isn't clear, then result is false
     @Override
-    public boolean hasClearPath(BoardSquare destination, Map<BoardSquare, AbstractPiece> allPieces, AbstractPiece piece) {
+    public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces, AbstractPiece piece) {
         return rook.hasClearPath(destination, allPieces, this) &&
                 bishop.hasClearPath(destination, allPieces, this);
     }

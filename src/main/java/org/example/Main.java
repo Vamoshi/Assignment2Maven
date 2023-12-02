@@ -2,7 +2,9 @@ package org.example;
 
 import org.example.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -28,11 +30,11 @@ public class Main {
         Board board = new Board();
         Player player = new Player(board);
 
-        BoardSquare location = new BoardSquare(0,0);
-        player.addPiece(location, new Bishop(Team.WHITE, location));
+        BoardSquare location = new BoardSquare(0, 0);
+        player.addPiece(new Bishop(Team.WHITE, location));
         player.takeNextTurn();
 
-        Map<BoardSquare, AbstractPiece> pieces = player.getAllPieces();
+        List<AbstractPiece> pieces = player.getAllPieces();
 
 //        for (BoardSquare square : pieces.keySet()) {
 //            AbstractPiece piece = pieces.get(square);
