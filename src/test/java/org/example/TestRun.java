@@ -12,6 +12,7 @@ class TestRun {
     Board board = new Board();
     Player player = new Player(board);
 
+//    Shouldnt be able to add same pieces to same location
     @Test
     void noDuplicatePiecesSameLocation() {
         Pawn p1 = new Pawn(Team.WHITE, new BoardSquare(0, 0));
@@ -25,6 +26,7 @@ class TestRun {
         assertEquals(1, player.getAllPieces().size());
     }
 
+//    Shouldnt be able to add same pieces to same location, function 2
     @Test
     void noDuplicatePiecesSameLocation2() {
         Pawn p1 = new Pawn(Team.WHITE, new BoardSquare(0, 0));
@@ -35,7 +37,6 @@ class TestRun {
 
         assertEquals(1, player.getAllPieces().size());
     }
-
 
     @Test
     void takeNextTurnTestFalse() {
@@ -55,6 +56,7 @@ class TestRun {
         assertTrue(player.takeNextTurn());
     }
 
+//    Check if rook can move when there is nothing blocking it
     @Test
     void moveRookTrue() {
         AbstractPiece rook = new Rook(Team.WHITE, new BoardSquare(0, 1));
@@ -67,7 +69,7 @@ class TestRun {
         assertTrue(player.move(rook, new BoardSquare(0, 7)));
     }
 
-
+//    Rook should not be able to move it something is blocking it
     @Test
     void moveRookFalse() {
         AbstractPiece rook = new Rook(Team.WHITE, new BoardSquare(0, 1));
@@ -80,6 +82,7 @@ class TestRun {
         assertFalse(player.move(rook, new BoardSquare(0, 3)));
     }
 
+//    Chcking if bishop can move without a piece blocking it
     @Test
     void moveBishopTrue() {
         AbstractPiece rook = new Rook(Team.WHITE, new BoardSquare(0, 1));
@@ -87,7 +90,6 @@ class TestRun {
 
         player.addPieces(new ArrayList<>(List.of(rook, bishop)));
 
-//        put bishop above of rook
         assertTrue(player.move(bishop, new BoardSquare(1, 1)));
     }
 
@@ -102,6 +104,7 @@ class TestRun {
         assertFalse(player.move(bishop, new BoardSquare(2, 2)));
     }
 
+// Rook is sandwiched by pawn and king, so should not be able to move thus the function should return empty
     @Test
     void getAllPieceValidMovesNullRook() {
         AbstractPiece rook = new Rook(Team.WHITE, new BoardSquare(0, 0));
@@ -112,11 +115,10 @@ class TestRun {
 
         Map<AbstractPiece, List<BoardSquare>> rookMoves = player.getAllPieceValidMoves(rook);
 
-        rookMoves.get(rook).forEach(rm -> System.out.printf("(%d,%d)\n", rm.getX(), rm.getY()));
-
         assertEquals(0, rookMoves.get(rook).size());
     }
 
+//    bishop is blocked by pawn so should not be able to move this the function should return empty
     @Test
     void getAllPieceValidMovesNullBishop() {
         AbstractPiece bishop = new Bishop(Team.WHITE, new BoardSquare(0, 0));
@@ -131,6 +133,7 @@ class TestRun {
         assertEquals(0, bishopMoves.get(bishop).size());
     }
 
+//    rook is blocked by king, but there is a space between rook and pawn, so should be able to move between one space
     @Test
     void getAllPieceValidMovesOnlyOneRook() {
         AbstractPiece rook = new Rook(Team.WHITE, new BoardSquare(0, 0));
@@ -144,7 +147,7 @@ class TestRun {
         assertEquals(1, rookMoves.get(rook).size());
         assertTrue(BoardUtil.isSameSquare(new BoardSquare(0, 1), rookMoves.get(rook).get(0)));
     }
-
+//    bishop is blocked by pawn, but there is a space between bishop and pawn, so should be able to move between one space
     @Test
     void getAllPieceValidMovesOnlyOneBishop() {
         AbstractPiece bishop = new Bishop(Team.WHITE, new BoardSquare(0, 0));
@@ -177,6 +180,7 @@ class TestRun {
     }
 
 
+//    Checks that addpiece adds piece
     @Test
     void getAllPiecesNotNull() {
         player.addPiece(new Rook(Team.WHITE, new BoardSquare(0, 0)));
@@ -184,6 +188,7 @@ class TestRun {
         assertNotNull(player.getAllPieces());
     }
 
+//    initializing player without pieces should not have pieces??
     //    This test actually failed at first because I didn't return null if player had no pieces
     @Test
     void getAllPiecesNull() {
