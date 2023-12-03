@@ -30,6 +30,10 @@ public class Pawn extends AbstractPiece {
         //if first move, then nothing will be in front of pawn. always gonna be true.
         if (piece.isFirstMove()) return true;
         for (AbstractPiece otherPiece : allPieces) {
+
+
+            if (BoardUtil.isSameSquare(piece.getLocation(), otherPiece.getLocation())) return false;
+
             BoardSquare otherLoc = otherPiece.getLocation();
             if (BoardUtil.isSameSquare(destination, otherLoc)) {
                 return false;

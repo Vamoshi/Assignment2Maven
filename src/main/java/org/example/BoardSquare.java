@@ -14,4 +14,8 @@ public class BoardSquare {
     public int getY(){
         return this.y;
     }
+
+    public void printLocation() {
+        System.out.printf("(%d,%d) \n",x,y);
+    }
 }

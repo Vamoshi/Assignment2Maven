@@ -17,13 +17,18 @@ public class Player {
         };
     }
 
-    public void takeNextTurn() {
+    public boolean takeNextTurn() {
+        if (pieces.isEmpty()) return false;
+
+//        Gets all possible valid moves
         Map<AbstractPiece, List<BoardSquare>> allValidMoves = getAllValidMoves();
 
+//        gets a random piece
         AbstractPiece pieceKey = allValidMoves.keySet().iterator().next();
+//        takes the first move of random piece
         BoardSquare square = allValidMoves.get(pieceKey).getFirst();
 
-        System.out.println(this.move(pieceKey, square));
+        return this.move(pieceKey, square);
     }
 
     public Map<AbstractPiece, List<BoardSquare>> getAllValidMoves() {
@@ -37,10 +42,28 @@ public class Player {
         return allValidMoves;
     }
 
+    public Map<AbstractPiece, List<BoardSquare>> getAllPieceValidMoves(AbstractPiece piece) {
+        Map<AbstractPiece, List<BoardSquare>> allValidMoves = new HashMap<>();
+
+        //gets all valid moves of all player's pieces
+        allValidMoves.put(piece, board.getValidMoves(piece, pieces));
+
+        return allValidMoves;
+    }
+
     //Board.move attempts to move a piece into a given square, and returns true if it was able to
     public boolean move(AbstractPiece piece, BoardSquare destination) {
+        List<BoardSquare> allValidMoves = getAllPieceValidMoves(piece).get(piece);
 
-        if (board.squareIsEmpty(destination, this.pieces) && piece.hasClearPath(destination, pieces)) {
+        boolean validMove = false;
+
+        for (BoardSquare m : allValidMoves) {
+            if (BoardUtil.isSameSquare(m, destination)) {
+                validMove = true;
+            }
+        }
+
+        if (board.squareIsEmpty(destination, this.pieces) && validMove) {
             board.clearBoardSquare(piece.getLocation(), this.pieces);
             piece.setLocation(destination);
             addPiece(piece);
@@ -54,11 +77,24 @@ public class Player {
         return pieces.isEmpty() ? null : pieces;
     }
 
-    public void addPiece(AbstractPiece piece) {
+    public boolean addPiece(AbstractPiece piece) {
+        for (AbstractPiece p : pieces) {
+            if (BoardUtil.isSameSquare(piece.getLocation(), p.getLocation())){
+                return false;
+            }
+        }
         pieces.add(piece);
+
+        return true;
     }
 
-    public void addPieces(List<AbstractPiece> pieces){
-        this.pieces.addAll(pieces);
+    public Map<AbstractPiece, Boolean> addPieces(List<AbstractPiece> pieces) {
+        Map<AbstractPiece, Boolean> result = new HashMap<>();
+
+        pieces.forEach(piece -> {
+            result.put(piece, addPiece(piece));
+        });
+
+        return result;
     }
 }

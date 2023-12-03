@@ -48,11 +48,17 @@ public class Bishop extends AbstractPiece {
         int destX = destination.getX();
         int destY = destination.getY();
 
+
+
         for (AbstractPiece otherPiece : allPieces) {
             BoardSquare otherLoc = otherPiece.getLocation();
+
             int otherX = otherLoc.getX();
             int otherY = otherLoc.getY();
+
 //          left to right is x+y = x+y
+//          \ < - this diagonal x+y = x+y
+
             if (destX + destY == otherX + otherY) {
                 int otherDiff = otherY - otherX;
                 int destDiff = destY - destX;
@@ -63,13 +69,14 @@ public class Bishop extends AbstractPiece {
                     return false;
                 }
 //          right to left is x-y = x-y
+//          / <- this diagonal x-y = x-y
             } else if (destX - destY == otherX - otherY) {
                 int otherSum = otherY + otherX;
                 int destSum = destY + destX;
                 int pieceSum = piece.getLocation().getY() + piece.getLocation().getX();
-                if (otherSum > destSum && otherSum < pieceSum) {
+                if (otherSum <= destSum && otherSum >= pieceSum) {
                     return false;
-                } else if (otherSum < destSum && otherSum > pieceSum) {
+                } else if (otherSum >= destSum && otherSum <= pieceSum) {
                     return false;
                 }
             }

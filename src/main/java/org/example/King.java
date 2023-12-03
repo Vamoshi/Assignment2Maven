@@ -35,6 +35,7 @@ public class King extends AbstractPiece {
     public boolean hasClearPath(BoardSquare destination, List<AbstractPiece> allPieces, AbstractPiece piece) {
         for (AbstractPiece otherPiece : allPieces) {
             BoardSquare otherLoc = otherPiece.getLocation();
+
             if (BoardUtil.isSameSquare(destination, otherLoc)) return false;
         }
         return true;

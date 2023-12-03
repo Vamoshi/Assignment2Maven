@@ -36,15 +36,8 @@ public class Rook extends AbstractPiece {
         int x = piece.getLocation().getX();
         int y = piece.getLocation().getY();
 
-        allPieces.forEach((p) -> System.out.print(p.getClass()));
-
-System.out.print(allPieces.size());
-
         for (AbstractPiece otherPiece : allPieces) {
             BoardSquare otherLoc = otherPiece.getLocation();
-
-            System.out.printf("X,Y (%d, %d) OTHERLOC(%d,%d)", x, y, otherLoc.getX(), otherLoc.getY());
-
 //          Check Vertical
             if (destination.getX() == otherLoc.getX()) {
 //              if y > otherLoc.y and otherloc.y > dest.y that means otherloc is in the middle

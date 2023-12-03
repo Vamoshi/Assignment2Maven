@@ -11,9 +11,25 @@ public class Board {
     }
 
     public List<BoardSquare> getValidMoves(AbstractPiece piece, List<AbstractPiece> pieces) {
+        List<AbstractPiece> piecesPieceRemoved = new ArrayList<>();
+
+        // Remove piece from pieces
+        for (AbstractPiece p : pieces) {
+            if (!BoardUtil.isSameSquare(piece.getLocation(), p.getLocation())) piecesPieceRemoved.add(p);
+        }
+
         List<BoardSquare> boardMoves = piece.getEmptyBoardMoves();
+
         //if path not clear, remove move
-        boardMoves.removeIf((e) -> !piece.hasClearPath(e, pieces));
+        boardMoves.removeIf((boardSquare) -> !piece.hasClearPath(boardSquare, piecesPieceRemoved));
+
+//        Remove if pieces are in same location
+        piecesPieceRemoved.forEach(p -> {
+            boardMoves.removeIf(boardMove -> BoardUtil.isSameSquare(boardMove, p.getLocation()));
+        });
+
+//        boardMoves.forEach(BoardSquare::printLocation);
+
         return boardMoves;
     }
 
@@ -23,10 +39,11 @@ public class Board {
 
 //            System.out.printf("square(%s, %s) toClear(%s, %s) \n", pieceLoc.getX(), pieceLoc.getY(), toClear.getX(), toClear.getY());
 
-            if (BoardUtil.isSameSquare(pieceLoc, toClear)){
+            if (BoardUtil.isSameSquare(pieceLoc, toClear)) {
                 pieces.remove(piece);
                 break;
-            };
+            }
+            ;
 //            System.out.printf("IN BOARD Square(%s,%s) = %s (%s, %s) \n", pieceLoc.getX(), pieceLoc.getY(), piece.getClass(), piece.getLocation().getX(), piece.getLocation().getY()) ;
         }
     }
